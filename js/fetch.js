@@ -1,3 +1,5 @@
+
+var $xml = "";
 $('button#taste').click(function(e){
 e.preventDefault();
 var request = $("button.active").eq(0).html()
@@ -9,17 +11,45 @@ var wmsRequest = "REQUEST="+request+"&SERVICE="+service+"&VERSION="+version
 
 //console.log(wmsRequest)
 
+
+
 requestWMS(url+wmsRequest, function(service){
 $('.results').toggle();
 
+//console.log(service)
+var xmlDoc = $.parseXML(service)
+$xml = $(xmlDoc)
 
-$(service).find("Layer").each(function(){
+if( $xml.find("Layer").children("Layer").size() > 0)
+       {
+          $xml.find("Layer").each(function(){
+          
+          var numchildren = $(this).children("Layer").size()
+if (numchildren ==0){
 
-var name =$(this).find("Name").html();
-$('.results').append("<div>"+name+"</div>");
+	numchildren = "I am the only Layer"
+}
+else{
+ 	
+	numchildren = "I have <span class='badge badge-info'>"+numchildren+" Layers</span>"
+}
+
+          var name =$(this).find("Name").html();
+		  $('.results').append("<div><div style='float:left'>"+name+"</div><div style='float:right'>"+numchildren+"</div></div><br>")
+          })  
+        } else {
+          console.log(" I dont have children!")
+          
+        }
 
 
-})
+
+/*$(service).find("Layer").each(function(){
+
+
+
+
+})*/
 
 
 $('.results').scrollTop();
