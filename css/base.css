@@ -12,3 +12,13 @@ position:absolute;
 bottom:0;
 left:0;
 }
+
+.results{
+	background-color:white;
+    height: 200px;
+    margin: auto;
+    overflow-y: auto;
+    width: 350px;
+    
+
+}
